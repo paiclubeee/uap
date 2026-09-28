@@ -1,0 +1,2732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming & AI Club of EEE, UAP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        :root {
+            --primary: #00d4ff;
+            --primary-glow: #00ffff;
+            --accent: #7c3aed;
+            --accent-light: #a78bfa;
+            --pink: #ec4899;
+            --bg-dark: #050510;
+            --bg-card: rgba(15, 15, 35, 0.7);
+            --border: rgba(0, 212, 255, 0.2);
+            --text: #e8e8f0;
+            --text-muted: #8888a0;
+            --ai-gradient: linear-gradient(135deg, #00d4ff, #7c3aed, #ec4899);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+            z-index: -3;
+            pointer-events: none;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: -30%; right: -20%;
+            width: 900px; height: 900px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.15), transparent 70%);
+            border-radius: 50%;
+            z-index: -2;
+            animation: orbFloat 20s ease-in-out infinite;
+            filter: blur(40px);
+        }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-150px, 150px) scale(1.3); }
+        }
+        .particle {
+            position: fixed;
+            width: 3px; height: 3px;
+            background: var(--primary);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.6;
+            box-shadow: 0 0 10px var(--primary);
+            pointer-events: none;
+        }
+        .particle:nth-child(1) { top: 10%; left: 15%; animation: particleFloat 15s infinite; }
+        .particle:nth-child(2) { top: 30%; left: 80%; animation: particleFloat 20s infinite reverse; }
+        .particle:nth-child(3) { top: 60%; left: 25%; animation: particleFloat 18s infinite; }
+        .particle:nth-child(4) { top: 80%; left: 60%; animation: particleFloat 22s infinite reverse; }
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(0); opacity: 0.3; }
+            50% { transform: translateY(-200px) translateX(50px); opacity: 0.8; }
+        }
+        a { text-decoration: none; color: inherit; }
+        button { font-family: inherit; cursor: pointer; border: none; }
+        img { max-width: 100%; display: block; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 70px;
+            position: relative;
+            display: block;
+            letter-spacing: 1px;
+            font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+            color: #fff;
+        }
+        .section-title span {
+            background: var(--ai-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: var(--ai-gradient);
+            border-radius: 2px;
+        }
+        
+        .subsection-title {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 60px 0 40px;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            letter-spacing: 1px;
+        }
+        .subsection-title i {
+            color: var(--primary);
+            filter: drop-shadow(0 0 12px var(--primary-glow));
+            font-size: 1.4rem;
+        }
+        .subsection-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: var(--ai-gradient);
+            border-radius: 2px;
+        }
+        
+        .team-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: center;
+            margin: 50px auto 25px;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            max-width: fit-content;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+        }
+        .team-title i {
+            font-size: 1rem;
+            filter: drop-shadow(0 0 8px var(--primary-glow));
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            padding: 14px 0;
+            z-index: 1000;
+            background: rgba(5, 5, 16, 0.75);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+        nav.scrolled {
+            background: rgba(5, 5, 16, 0.95);
+            padding: 10px 0;
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.15);
+        }
+        nav .container { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo-icon {
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            background: #000;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+            padding: 2px;
+        }
+        .logo-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .logo-text { font-family: 'Orbitron', sans-serif; font-weight: 700; }
+        .logo-text .main {
+            background: var(--ai-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.05rem;
+            display: block;
+        }
+        .logo-text small {
+            display: block;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+        }
+        .nav-links { display: flex; align-items: center; gap: 6px; }
+        .nav-links > a:not(.nav-cta):not(.nav-upcoming) {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .nav-links > a:not(.nav-cta):not(.nav-upcoming):hover {
+            color: var(--primary);
+            background: rgba(0, 212, 255, 0.1);
+        }
+        .nav-upcoming {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 18px !important;
+            background: linear-gradient(135deg, #ff6b35, #f7931e, #ec4899);
+            color: #fff !important;
+            border-radius: 50px;
+            font-size: 0.78rem !important;
+            font-weight: 600;
+            box-shadow: 0 5px 25px rgba(255, 107, 53, 0.5);
+        }
+        .nav-upcoming:hover { transform: translateY(-2px); }
+        .pulse-dot {
+            width: 8px; height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px !important;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--pink));
+            color: #fff !important;
+            border-radius: 50px;
+            font-size: 0.8rem !important;
+            font-weight: 600;
+        }
+        .nav-cta:hover { transform: translateY(-2px); }
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            color: #fff;
+            font-size: 1.4rem;
+            padding: 8px;
+        }
+        
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 130px 25px 80px;
+        }
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 18px 6px 6px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .hero-badge:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+        .badge-arrow {
+            font-size: 0.7rem;
+            opacity: 0.6;
+            transition: all 0.3s;
+        }
+        .hero-badge:hover .badge-arrow {
+            opacity: 1;
+            transform: translateX(3px);
+        }
+        
+        .university-logo {
+            width: 32px; height: 32px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: #fff;
+            padding: 3px;
+        }
+        .hero-logo {
+            position: relative;
+            width: 190px; height: 190px;
+            border-radius: 50%;
+            background: #000;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 35px;
+            padding: 8px;
+        }
+        .hero-logo::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #00d4ff, #7c3aed, #ec4899, #00d4ff);
+            animation: rotateRing 4s linear infinite;
+            z-index: -2;
+        }
+        .hero-logo::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            background: #050510;
+            z-index: -1;
+        }
+        .hero-logo img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes rotateRing {
+            100% { transform: rotate(360deg); }
+        }
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .hero-content h1 span {
+            background: var(--ai-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-tagline {
+            font-size: 1.05rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 1px solid transparent;
+        }
+        .hero-tagline:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--border);
+            text-shadow: 0 0 20px var(--primary-glow);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+        .tagline-arrow {
+            font-size: 0.75rem;
+            opacity: 0.6;
+            transition: all 0.3s;
+        }
+        .hero-tagline:hover .tagline-arrow {
+            opacity: 1;
+            transform: translateX(3px);
+        }
+        
+        .hero-content > p {
+            max-width: 650px;
+            margin: 0 auto 40px;
+            color: var(--text-muted);
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 34px;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--pink));
+            color: #fff;
+            font-weight: 600;
+            border-radius: 50px;
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.4);
+            transition: all 0.3s;
+        }
+        .btn:hover { transform: translateY(-4px); }
+        .btn-upcoming-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 34px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e, #ec4899);
+            color: #fff;
+            font-weight: 600;
+            border-radius: 50px;
+            box-shadow: 0 8px 30px rgba(236, 72, 153, 0.5);
+        }
+        .btn-upcoming-hero:hover { transform: translateY(-4px); }
+        .btn-register {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding: 9px 22px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .btn-register:hover { transform: translateY(-3px); }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-top: 70px;
+            padding: 35px 40px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+        }
+        .stat-item { text-align: center; }
+        .stat-item h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--ai-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .stat-item p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        
+        section { padding: 100px 0; position: relative; }
+        section:nth-child(even) { background: rgba(10, 10, 25, 0.5); }
+        
+        /* ==================== NOTICE BOARD ==================== */
+        .notice-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .notice-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s;
+            position: relative;
+            backdrop-filter: blur(15px);
+        }
+        .notice-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 25px 60px rgba(0, 212, 255, 0.25);
+        }
+        .notice-badge-new {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 2;
+            padding: 5px 14px;
+            background: linear-gradient(135deg, #ff6b35, #ec4899);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 50px;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.5);
+            animation: newPulse 2s ease-in-out infinite;
+        }
+        @keyframes newPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 5px 15px rgba(255, 107, 53, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 5px 25px rgba(255, 107, 53, 0.8); }
+        }
+        .notice-img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(124, 58, 237, 0.1));
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 3rem;
+        }
+        .notice-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+        .notice-card:hover .notice-img img {
+            transform: scale(1.1);
+        }
+        .notice-body {
+            padding: 22px 25px;
+        }
+        .notice-body h3 {
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .notice-body p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        .notice-date {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        /* ==================== NOTICE MODAL ==================== */
+        .notice-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(5, 5, 16, 0.95);
+            backdrop-filter: blur(20px);
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+        .notice-modal.active { display: block; }
+        .notice-modal-box {
+            position: relative;
+            background: linear-gradient(135deg, rgba(10, 10, 25, 0.98), rgba(20, 15, 40, 0.98));
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 22px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 30px 100px rgba(0, 212, 255, 0.4);
+            overflow: hidden;
+            animation: modalSlideUp 0.4s ease;
+        }
+        @keyframes modalSlideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .notice-modal-close {
+            position: absolute;
+            top: 15px; right: 20px;
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: rgba(5, 5, 16, 0.9);
+            color: #fff;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .notice-modal-close:hover {
+            background: var(--primary);
+            color: #050510;
+            transform: rotate(90deg);
+        }
+        .notice-modal-img {
+            width: 100%;
+            max-height: 70vh;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .notice-modal-img img {
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+            object-fit: contain;
+        }
+        .notice-modal-body {
+            padding: 30px 35px;
+        }
+        .notice-modal-body h2 {
+            color: #fff;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+            line-height: 1.3;
+        }
+        .notice-modal-body p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .notice-modal-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .notice-modal-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .mv-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+        .mv-card {
+            padding: 40px 35px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .mv-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: var(--ai-gradient);
+        }
+        .mv-icon {
+            width: 60px; height: 60px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(124, 58, 237, 0.15));
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        .mv-card h3 {
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        .mv-card p { color: var(--text-muted); }
+        
+        .convenor-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .convenor-card {
+            position: relative;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(124, 58, 237, 0.08));
+            border: 2px solid var(--primary);
+            border-radius: 25px;
+            padding: 50px 40px 40px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+        .convenor-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 212, 255, 0.4);
+        }
+        .convenor-badge {
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 22px;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #1a1a1a;
+            font-size: 0.82rem;
+            font-weight: 700;
+            border-radius: 50px;
+        }
+        .convenor-avatar {
+            width: 160px; height: 160px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--primary);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(124, 58, 237, 0.15));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 4rem;
+            color: var(--primary);
+        }
+        .convenor-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .convenor-card h3 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        .convenor-role {
+            color: var(--primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .convenor-dept {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+        .convenor-quote {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-style: italic;
+            padding: 18px 20px;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 12px;
+            border-left: 3px solid var(--primary);
+        }
+        .click-hint {
+            margin-top: 15px;
+            color: var(--primary);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            animation: pulseHint 2s ease-in-out infinite;
+        }
+        @keyframes pulseHint {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        
+        .committee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        .member-card {
+            background: var(--bg-card);
+            padding: 30px 25px;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .member-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+        .member-avatar {
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--pink));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.2rem;
+            color: #fff;
+            margin: 0 auto 18px;
+            border: 3px solid var(--bg-dark);
+            overflow: hidden;
+        }
+        .member-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .member-card h3 { color: #fff; font-size: 1.05rem; margin-bottom: 6px; }
+        .member-card .role {
+            color: var(--primary);
+            font-size: 0.82rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .member-card .dept { color: var(--text-muted); font-size: 0.82rem; }
+        
+        .member-socials {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 212, 255, 0.15);
+        }
+        .member-socials a {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid var(--border);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        .member-socials a:hover {
+            background: var(--ai-gradient);
+            color: #fff;
+            transform: translateY(-3px) scale(1.1);
+            border-color: transparent;
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+        }
+        
+        .upcoming-events {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .event-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            transition: all 0.3s;
+        }
+        .event-card:hover {
+            border-color: #ff6b35;
+            transform: translateY(-5px);
+        }
+        .event-card-img {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(124, 58, 237, 0.15));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3.5rem;
+            color: var(--primary);
+            overflow: hidden;
+            min-height: 240px;
+        }
+        .event-card-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .event-card:hover .event-card-img img { transform: scale(1.05); }
+        .event-card-body { padding: 28px 30px; }
+        .event-date-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            background: rgba(255, 107, 53, 0.15);
+            border: 1px solid rgba(255, 107, 53, 0.4);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: #ff9a5c;
+            margin-bottom: 12px;
+        }
+        .event-subtitle {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .event-card-body h3 {
+            color: #fff;
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .event-card-body p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px; }
+        
+        .past-events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .past-event-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .past-event-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 25px 60px rgba(0, 212, 255, 0.2);
+        }
+        .past-event-img {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(124, 58, 237, 0.15));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem;
+            color: var(--primary);
+            overflow: hidden;
+        }
+        .past-event-img img { width: 100%; height: 100%; object-fit: cover; }
+        .past-event-info { padding: 22px 24px; }
+        .past-event-info .date {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .past-event-info h3 {
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+        }
+        .past-event-info .view-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        /* ==================== EVENT MODAL ==================== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(5, 5, 16, 0.95);
+            backdrop-filter: blur(15px);
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+        .modal-overlay.active { display: block; }
+        .modal-box {
+            position: relative;
+            background: linear-gradient(135deg, rgba(10, 10, 25, 0.95), rgba(20, 15, 40, 0.95));
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 22px;
+            border: 1px solid var(--primary);
+            overflow: hidden;
+            animation: modalSlideUp 0.4s ease;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px; right: 20px;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: rgba(5, 5, 16, 0.9);
+            color: #fff;
+            font-size: 1.4rem;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .modal-close:hover { background: var(--primary); color: #050510; transform: rotate(90deg); }
+        
+        .modal-cover {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(124, 58, 237, 0.2));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 5rem;
+            color: var(--primary);
+            overflow: hidden;
+            position: relative;
+        }
+        .modal-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        
+        .modal-body { padding: 35px 40px 40px; }
+        .modal-meta { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 18px; }
+        .modal-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.78rem;
+            color: var(--primary);
+        }
+        .modal-body h2 {
+            color: #fff;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+            line-height: 1.3;
+        }
+        .modal-body h4 {
+            color: var(--primary);
+            margin: 22px 0 12px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-body h4 i {
+            filter: drop-shadow(0 0 8px var(--primary-glow));
+        }
+        .modal-body p { 
+            color: var(--text-muted); 
+            line-height: 1.9;
+            font-size: 0.95rem;
+        }
+        .modal-body ul { list-style: none; padding: 0; }
+        .modal-body ul li {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            padding: 8px 0 8px 28px;
+            position: relative;
+        }
+        .modal-body ul li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+        
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .modal-gallery-item {
+            aspect-ratio: 4/3;
+            border-radius: 12px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .modal-gallery-item:hover {
+            border-color: var(--primary);
+            transform: scale(1.03);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+        .modal-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .modal-gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .cta-banner {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.12), rgba(124, 58, 237, 0.12));
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .cta-banner h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .cta-banner h2 span {
+            background: var(--ai-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .cta-banner p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        #contact { text-align: center; }
+        #contact .container { display: flex; flex-direction: column; align-items: center; }
+        .contact-info {
+            width: 100%;
+            max-width: 700px;
+            background: var(--bg-card);
+            padding: 45px 35px;
+            border-radius: 25px;
+            border: 1px solid var(--border);
+        }
+        .contact-info p {
+            margin: 15px 0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .contact-info p i { color: var(--primary); font-size: 1.1rem; }
+        .contact-info a { color: var(--primary); }
+        .social-links {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        .social-links a {
+            color: #fff;
+            font-size: 1.15rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 55px; height: 55px;
+            border-radius: 50%;
+            background: rgba(15, 15, 35, 0.8);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .social-links a:hover {
+            background: var(--ai-gradient);
+            transform: translateY(-8px);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px 25px;
+            background: #02020a;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        footer .footer-links a { color: var(--text-muted); }
+        footer .footer-links a:hover { color: var(--primary); }
+        footer span { color: var(--primary); }
+        
+        .reveal { opacity: 0; transform: translateY(60px); transition: all 1s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        /* ==================== CONVENOR MODAL ==================== */
+        .convenor-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(5, 5, 16, 0.95);
+            backdrop-filter: blur(20px);
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+        .convenor-modal.active { display: block; }
+        .convenor-modal-box {
+            position: relative;
+            background: linear-gradient(135deg, rgba(10, 10, 25, 0.98), rgba(20, 15, 40, 0.98));
+            max-width: 950px;
+            margin: 0 auto;
+            border-radius: 25px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 30px 100px rgba(0, 212, 255, 0.4);
+            overflow: hidden;
+            animation: modalSlideUp 0.4s ease;
+        }
+        .convenor-modal-close {
+            position: absolute;
+            top: 20px; right: 20px;
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: rgba(5, 5, 16, 0.9);
+            color: #fff;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .convenor-modal-close:hover {
+            background: var(--primary);
+            color: #050510;
+            transform: rotate(90deg);
+        }
+        .convenor-modal-header {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 30px;
+            padding: 40px 40px 30px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(124, 58, 237, 0.08));
+            border-bottom: 1px solid var(--border);
+        }
+        .convenor-modal-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid var(--primary);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(124, 58, 237, 0.15));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: var(--primary);
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.5);
+            position: relative;
+        }
+        .convenor-modal-photo img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        .convenor-modal-info h1 {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 8px;
+            font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+        }
+        .convenor-modal-info .title {
+            color: var(--primary);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .convenor-modal-info .dept {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .convenor-modal-info .quote {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 15px 20px;
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 3px solid var(--primary);
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .convenor-modal-contact {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--text);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .contact-btn:hover {
+            background: var(--ai-gradient);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
+            border-color: transparent;
+        }
+        .contact-btn.scholar-btn:hover {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+        }
+        .convenor-modal-body {
+            padding: 35px 40px;
+        }
+        .profile-section {
+            margin-bottom: 30px;
+        }
+        .profile-section:last-child { margin-bottom: 0; }
+        .profile-section h3 {
+            font-size: 1.05rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .edu-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        .edu-timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 5px;
+            bottom: 5px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+        }
+        .edu-item {
+            position: relative;
+            padding: 12px 0;
+        }
+        .edu-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+            border: 2px solid var(--bg-dark);
+        }
+        .edu-item h4 {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .edu-item .year {
+            color: var(--primary);
+            font-size: 0.82rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .edu-item .institution {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .info-item {
+            padding: 15px;
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: all 0.3s;
+        }
+        .info-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        .info-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        .info-item .info-content h5 {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .info-item .info-content p {
+            color: #fff;
+            font-size: 0.92rem;
+            font-weight: 500;
+        }
+        .research-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .research-tags span {
+            padding: 8px 16px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+        .research-tags span:hover {
+            background: var(--ai-gradient);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+        .achievements-list {
+            list-style: none;
+            padding: 0;
+        }
+        .achievements-list li {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            padding: 10px 0 10px 30px;
+            position: relative;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.08);
+        }
+        .achievements-list li:last-child {
+            border-bottom: none;
+        }
+        .achievements-list li::before {
+            content: '\f091';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+            font-size: 0.9rem;
+        }
+        .scholar-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .scholar-stat {
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(66, 133, 244, 0.08), rgba(52, 168, 83, 0.05));
+            border: 1px solid rgba(66, 133, 244, 0.25);
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .scholar-stat:hover {
+            border-color: #4285f4;
+            transform: translateY(-3px);
+        }
+        .scholar-stat h4 {
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 4px;
+        }
+        .scholar-stat p {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+        }
+        
+        @media (max-width: 900px) {
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: absolute;
+                top: 100%; left: 0;
+                width: 100%;
+                background: rgba(5, 5, 16, 0.98);
+                flex-direction: column;
+                padding: 25px 20px;
+                gap: 10px;
+                border-bottom: 1px solid var(--border);
+                transform: translateY(-150%);
+                transition: transform 0.4s ease;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .nav-links.open { transform: translateY(0); opacity: 1; pointer-events: all; }
+            .mv-grid { grid-template-columns: 1fr; }
+            .event-card { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .section-title { font-size: 1.7rem; }
+            .subsection-title { font-size: 1.3rem; }
+            .hero-content h1 { font-size: 2rem; }
+            .hero-logo { width: 150px; height: 150px; }
+            .stats-bar { gap: 30px; padding: 25px; }
+            .convenor-avatar { width: 130px; height: 130px; }
+            .team-title { font-size: 0.85rem; padding: 10px 18px; }
+            .hero-tagline { font-size: 0.85rem; letter-spacing: 2px; padding: 6px 14px; }
+            .convenor-modal-header { grid-template-columns: 1fr; text-align: center; padding: 30px 25px 25px; }
+            .convenor-modal-photo { width: 150px; height: 150px; margin: 0 auto; font-size: 3.5rem; }
+            .convenor-modal-info h1 { font-size: 1.5rem; }
+            .convenor-modal-body { padding: 25px 22px; }
+            .convenor-modal-contact { justify-content: center; }
+            .info-grid { grid-template-columns: 1fr; }
+            .scholar-stats { grid-template-columns: repeat(2, 1fr); }
+            .modal-body { padding: 25px 22px 30px; }
+            .modal-body h2 { font-size: 1.4rem; }
+            .notice-board { grid-template-columns: 1fr; gap: 20px; }
+            .notice-modal-body { padding: 25px 22px; }
+            .notice-modal-body h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav id="navbar">
+        <div class="container">
+            <a href="#hero" class="logo">
+                <div class="logo-icon">
+                    <img src="https://uploads.onecompiler.io/452pzzdff/1790279418440/PAI-2.png" alt="Logo">
+                </div>
+                <div class="logo-text">
+                    <span class="main">PAI CLUB EEE UAP</span>
+                    <small>PROGRAMMING & AI CLUB</small>
+                </div>
+            </a>
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+            <div class="nav-links" id="navLinks">
+                <a href="#hero">Home</a>
+                <a href="#mission">Mission</a>
+                <a href="#committee">Committee</a>
+                <a href="#upcoming">Events</a>
+                <a href="#past">Activities</a>
+                <a href="#contact">Contact</a>
+                <a href="#notice">Notice</a>
+                <a href="#upcoming" class="nav-upcoming">
+                    <span class="pulse-dot"></span>
+                    <i class="fas fa-fire"></i> Upcoming Event
+                </a>
+                <a href="https://forms.gle/YOUR_MEMBER_FORM_ID" target="_blank" class="nav-cta">
+                    <i class="fas fa-user-plus"></i> Join Us
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== HERO ==================== -->
+    <section id="hero">
+        <div class="container hero-content">
+            
+            <a href="https://www.uap-bd.edu/" target="_blank" class="hero-badge" title="Visit UAP Website">
+                <img src="https://uploads.onecompiler.io/452pzzdff/1790279451759/Image%207-Photoroom.png" alt="UAP" class="university-logo">
+                University of Asia Pacific
+                <i class="fas fa-external-link-alt badge-arrow"></i>
+            </a>
+            
+            <div class="hero-logo">
+                <img src="https://uploads.onecompiler.io/452pzzdff/1790279418440/PAI-2.png" alt="Logo">
+            </div>
+            
+            <h1>Programming & AI <span>Club</span></h1>
+            
+            <a href="https://eee.uap-bd.edu" target="_blank" class="hero-tagline" title="Visit EEE Department">
+                Department of EEE • UAP
+                <i class="fas fa-external-link-alt tagline-arrow"></i>
+            </a>
+            
+            <p>Empowering the next generation of innovators through programming, artificial intelligence, and hands-on technological excellence.</p>
+            
+            <div class="hero-buttons">
+                <a href="https://forms.gle/YOUR_MEMBER_FORM_ID" target="_blank" class="btn">
+                    <i class="fas fa-user-plus"></i> Join Us
+                </a>
+                <a href="#upcoming" class="btn-upcoming-hero">
+                    <span class="pulse-dot"></span>
+                    <i class="fas fa-fire"></i> Upcoming Event
+                </a>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-item"><h3>200+</h3><p>Members</p></div>
+                <div class="stat-item"><h3>25+</h3><p>Events</p></div>
+                <div class="stat-item"><h3>15+</h3><p>Workshops</p></div>
+                <div class="stat-item"><h3>5+</h3><p>Awards</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MISSION & VISION ==================== -->
+    <section id="mission" class="reveal">
+        <div class="container">
+            <h2 class="section-title">Mission & <span>Vision</span></h2>
+            <div class="mv-grid">
+                <div class="mv-card">
+                    <div class="mv-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3>Our Mission</h3>
+                    <p>To cultivate a community of skilled programmers and AI enthusiasts who can solve real-world problems through innovative technology.</p>
+                </div>
+                <div class="mv-card">
+                    <div class="mv-icon"><i class="fas fa-eye"></i></div>
+                    <h3>Our Vision</h3>
+                    <p>To become a leading student tech community in Bangladesh, producing world-class engineers, innovators, and problem solvers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== COMMITTEE ==================== -->
+    <section id="committee" class="reveal">
+        <div class="container">
+            <h2 class="section-title">PAI <span>CLUB</span> EEE</h2>
+            
+            <div class="convenor-section">
+                <div class="convenor-card" onclick="openConvenorModal()">
+                    <div class="convenor-badge">
+                        <i class="fas fa-crown"></i> Club Convenor
+                    </div>
+                    <div class="convenor-avatar" data-photo="convenor">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Md Masum Howlader</h3>
+                    <div class="convenor-role">Convenor, Programming & AI Club</div>
+                    <div class="convenor-dept">Assistant Professor • Dept. of EEE • UAP</div>
+                    <p class="convenor-quote">"Guiding the next generation of engineers towards innovation and excellence."</p>
+                    <div class="click-hint">
+                        <i class="fas fa-hand-pointer"></i> Click for Full Profile
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="subsection-title">
+                <i class="fas fa-users"></i>Executive Committee
+            </h3>
+            
+            <div class="committee-grid">
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="generalSecretary"><i class="fas fa-user-tie"></i></div>
+                    <h3>Name </h3>
+                    <div class="role">General Secretary</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="https://linkedin.com/in/md-asadus-zaman-emon-048182191/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://facebook.com/xunidemon" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="mailto:mdxunidemon@icloud.com" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="president"><i class="fas fa-user-tie"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">President</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="vicePresident"><i class="fas fa-user-tie"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Vice President</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="jointSecretary"><i class="fas fa-user-tie"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Joint Secretary</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="technicalLead"><i class="fas fa-user-tie"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Technical Lead</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="treasurer"><i class="fas fa-user-tie"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Treasurer</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="subsection-title" style="margin-top: 100px;">
+                <i class="fas fa-sitemap"></i> Executive Team
+            </h3>
+            
+            <h4 class="team-title">
+                <i class="fas fa-microchip"></i> Technical Team
+            </h4>
+            <div class="team-grid">
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="techLead"><i class="fas fa-user-cog"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Team Lead</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="tech1"><i class="fas fa-user-cog"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Member</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="tech2"><i class="fas fa-user-cog"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Member</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="tech3"><i class="fas fa-user-cog"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Member</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <h4 class="team-title">
+                <i class="fas fa-calendar-check"></i> Event Management Team
+            </h4>
+            <div class="team-grid">
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="eventLead"><i class="fas fa-user-tie"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Team Lead</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="event1"><i class="fas fa-user-tie"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Member</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="event2"><i class="fas fa-user-tie"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Member</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="event3"><i class="fas fa-user-tie"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Member</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <h4 class="team-title">
+                <i class="fas fa-palette"></i> Graphics & Creative Team
+            </h4>
+            <div class="team-grid">
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="graphicsLead"><i class="fas fa-user-pen"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Team Lead</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="graphics1"><i class="fas fa-user-pen"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Member</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="graphics2"><i class="fas fa-user-pen"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Member</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="graphics3"><i class="fas fa-user-pen"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Member</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <h4 class="team-title">
+                <i class="fas fa-camera-retro"></i> Media & Documentation Team
+            </h4>
+            <div class="team-grid">
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="mediaLead"><i class="fas fa-user-tag"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Team Lead</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="media1"><i class="fas fa-user-tag"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Member</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="media2"><i class="fas fa-user-tag"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Member</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar" data-photo="media3"><i class="fas fa-user-tag"></i></div>
+                    <h3>Member Name</h3>
+                    <div class="role">Member</div>
+                    <div class="dept">Dept. of EEE</div>
+                    <div class="member-socials">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- ==================== UPCOMING EVENTS ==================== -->
+    <section id="upcoming" class="reveal">
+        <div class="container">
+            <h2 class="section-title">Upcoming <span>Events</span></h2>
+            <div class="upcoming-events">
+                
+                <div class="event-card">
+                    <div class="event-card-img">
+                        <img src="https://uploads.onecompiler.io/452pzzdff/1790338758451/WhatsApp%20Image%202026-09-02%20at%2017.01.27.jpeg" 
+                             alt="Alumni Talk Poster"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;fas fa-robot&quot;></i>';">
+                    </div>
+                    <div class="event-card-body">
+                        <div class="event-date-badge"><i class="fas fa-calendar"></i> October 7, 2026</div>
+                        <h4 class="event-subtitle">Alumni Talk on</h4>
+                        <h3>Modern Grid Operation in Bangladesh</h3>
+                        <p>Hosted by Programming and AI Club of EEE, UAP with Engr. Ashar Ahmed Chowdhury (EEE 25th Batch).</p>
+                        <a href="https://luma.com/whcszsow" target="_blank" class="btn-register">
+                            <i class="fas fa-pen"></i> Register Now
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-card-img">
+                        <img src="https://uploads.onecompiler.io/452pzzdff/1790340056689/Gemini_Generated_Image_uax04juax04juax0.jpg" 
+                             alt="ETAP Poster"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;fas fa-microchip&quot;></i>';">
+                    </div>
+                    <div class="event-card-body">
+                        <div class="event-date-badge"><i class="fas fa-calendar"></i> September 30, 2026</div>
+                        <h3>Advanced Power System Modeling & Protection using ETAP</h3>
+                        <p>Speaker: Bipu Alam Emon Alumnus, Associate Member of IEB, EEE, University of Asia Pacific</p>
+                        <a href="https://luma.com/q9jq8xh1" target="_blank" class="btn-register">
+                            <i class="fas fa-pen"></i> Register Now
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PAST EVENTS ==================== -->
+    <section id="past" class="reveal">
+        <div class="container">
+            <h2 class="section-title">Past Events & <span>Activities</span></h2>
+            <div class="past-events-grid" id="pastEventsGrid"></div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT ==================== -->
+    <section id="contact" class="reveal">
+        <div class="container">
+            <h2 class="section-title">Get In <span>Touch</span></h2>
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> <a href="mailto:paiclub.eee.uap@gmail.com">paiclub.eee.uap@gmail.com</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> Department of EEE, University of Asia Pacific, Dhaka</p>
+                <p><i class="fas fa-phone"></i> +880 1XXX-XXXXXX</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== NOTICE BOARD (LAST SECTION) ==================== -->
+    <section id="notice" class="reveal">
+        <div class="container">
+            <h2 class="section-title">📢 Notice <span>Board</span></h2>
+            
+            <div class="notice-board">
+                
+                <!-- NOTICE 1 -->
+                <div class="notice-card" onclick="openNoticeModal(0)">
+                    <div class="notice-badge-new">🔴 NEW</div>
+                    <div class="notice-img">
+                        <img src="https://uploads.onecompiler.io/452pzzdff/1790367084467/Copy%20of%201.png" alt="Notice" 
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;fas fa-file-image&quot;></i>';">
+                    </div>
+                    <div class="notice-body">
+                        <h3>AI Workshop Notice</h3>
+                        <p>Registration details for the upcoming AI Workshop</p>
+                        <div class="notice-date">
+                            <i class="fas fa-calendar"></i> 25 Sept 2026
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- NOTICE 2 -->
+                <div class="notice-card" onclick="openNoticeModal(1)">
+                    <div class="notice-img">
+                        <img src="https://uploads.onecompiler.io/452pzzdff/1790348402014/WhatsApp%20Image%202026-09-25%20at%2020.59.34.jpeg" alt="Notice"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;fas fa-file-image&quot;></i>';">
+                    </div>
+                    <div class="notice-body">
+                        <h3>Club Registration Form</h3>
+                        <p>Membership registration for new students</p>
+                        <div class="notice-date">
+                            <i class="fas fa-calendar"></i> 20 Sept 2026
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- NOTICE 3 -->
+                <div class="notice-card" onclick="openNoticeModal(2)">
+                    <div class="notice-img">
+                        <img src="NOTICE_IMAGE_LINK_3.jpg" alt="Notice"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;fas fa-file-image&quot;></i>';">
+                    </div>
+                    <div class="notice-body">
+                        <h3>Event Schedule 2026</h3>
+                        <p>Complete event calendar for the year</p>
+                        <div class="notice-date">
+                            <i class="fas fa-calendar"></i> 15 Sept 2026
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== NOTICE MODAL ==================== -->
+    <div class="notice-modal" id="noticeModal">
+        <div class="notice-modal-box">
+            <button class="notice-modal-close" onclick="closeNoticeModal()">&times;</button>
+            <div class="notice-modal-img">
+                <img id="noticeModalImg" src="" alt="Notice">
+            </div>
+            <div class="notice-modal-body">
+                <h2 id="noticeModalTitle">Notice Title</h2>
+                <p id="noticeModalDesc">Notice description...</p>
+                <div class="notice-modal-meta">
+                    <span><i class="fas fa-calendar"></i> <span id="noticeModalDate">Date</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== EVENT MODAL ==================== -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-cover" id="modalCover"><i class="fas fa-image"></i></div>
+            <div class="modal-body">
+                <div class="modal-meta" id="modalMeta"></div>
+                <h2 id="modalTitle">Event</h2>
+                <h4><i class="fas fa-info-circle"></i> About This Event</h4>
+                <p id="modalDescription">Description...</p>
+                <h4><i class="fas fa-bullseye"></i> What We Did</h4>
+                <ul id="modalObjectives"></ul>
+                <h4><i class="fas fa-chart-bar"></i> Event Info</h4>
+                <ul id="modalInfo"></ul>
+                <div id="gallerySection">
+                    <h4><i class="fas fa-camera"></i> Event Gallery</h4>
+                    <div class="modal-gallery" id="modalGallery"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CONVENOR PROFILE MODAL ==================== -->
+    <div class="convenor-modal" id="convenorModal">
+        <div class="convenor-modal-box">
+            <button class="convenor-modal-close" onclick="closeConvenorModal()">&times;</button>
+            
+            <div class="convenor-modal-header">
+                <div class="convenor-modal-photo" id="convenorModalPhoto">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="convenor-modal-info">
+                    <h1>Md Masum Howlader</h1>
+                    <div class="title">Convenor, Programming & AI Club</div>
+                    <div class="dept">
+                        Assistant Professor<br>
+                        Department of Electrical & Electronic Engineering<br>
+                        University of Asia Pacific
+                    </div>
+                    
+                    <div class="convenor-modal-contact">
+                        <a href="mailto:masum@uap-bd.edu" class="contact-btn">
+                            <i class="fas fa-envelope"></i> Email
+                        </a>
+                        <a href="https://linkedin.com/in/username" target="_blank" class="contact-btn">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                        <a href="https://facebook.com/username" target="_blank" class="contact-btn">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </a>
+                        <a href="https://scholar.google.com/citations?user=USER_ID" target="_blank" class="contact-btn scholar-btn">
+                            <i class="fas fa-graduation-cap"></i> Google Scholar
+                        </a>
+                    </div>
+                    
+                    <p class="quote">"Guiding the next generation of engineers towards innovation and excellence."</p>
+                </div>
+            </div>
+            
+            <div class="convenor-modal-body">
+                
+                <div class="profile-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                    <div class="edu-timeline">
+                        <div class="edu-item">
+                            <h4>PhD in Electrical Engineering</h4>
+                            <div class="year">2015 - 2020</div>
+                            <div class="institution">Bangladesh University of Engineering & Technology (BUET)</div>
+                        </div>
+                        <div class="edu-item">
+                            <h4>MSc in Electrical Engineering</h4>
+                            <div class="year">2012 - 2014</div>
+                            <div class="institution">Bangladesh University of Engineering & Technology (BUET)</div>
+                        </div>
+                        <div class="edu-item">
+                            <h4>BSc in Electrical & Electronic Engineering</h4>
+                            <div class="year">2008 - 2012</div>
+                            <div class="institution">University of Asia Pacific (UAP)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h3><i class="fas fa-briefcase"></i> Current Position</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <i class="fas fa-user-tie"></i>
+                            <div class="info-content">
+                                <h5>Position</h5>
+                                <p>Assistant Professor</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-building"></i>
+                            <div class="info-content">
+                                <h5>Department</h5>
+                                <p>Electrical & Electronic Engineering</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-university"></i>
+                            <div class="info-content">
+                                <h5>University</h5>
+                                <p>University of Asia Pacific</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <div class="info-content">
+                                <h5>Office Hours</h5>
+                                <p>Sun-Wed: 10 AM - 4 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h3><i class="fas fa-flask"></i> Research Areas</h3>
+                    <div class="research-tags">
+                        <span>Power Systems</span>
+                        <span>Renewable Energy</span>
+                        <span>Smart Grid</span>
+                        <span>AI in Power Systems</span>
+                        <span>Machine Learning</span>
+                        <span>Power Electronics</span>
+                        <span>Solar PV</span>
+                        <span>Energy Storage</span>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Google Scholar</h3>
+                    <div class="scholar-stats">
+                        <div class="scholar-stat">
+                            <h4>25+</h4>
+                            <p>Publications</p>
+                        </div>
+                        <div class="scholar-stat">
+                            <h4>350+</h4>
+                            <p>Citations</p>
+                        </div>
+                        <div class="scholar-stat">
+                            <h4>10</h4>
+                            <p>h-index</p>
+                        </div>
+                        <div class="scholar-stat">
+                            <h4>12</h4>
+                            <p>i10-index</p>
+                        </div>
+                    </div>
+                    <a href="https://scholar.google.com/citations?user=USER_ID" target="_blank" class="contact-btn scholar-btn" style="margin-top: 10px;">
+                        <i class="fas fa-external-link-alt"></i> View Full Profile
+                    </a>
+                </div>
+                
+                <div class="profile-section">
+                    <h3><i class="fas fa-trophy"></i> Achievements</h3>
+                    <ul class="achievements-list">
+                        <li>Published 25+ research papers in international journals (IEEE, Elsevier)</li>
+                        <li>Received Best Paper Award at IEEE Conference 2023</li>
+                        <li>Principal Investigator of 3 research projects</li>
+                        <li>Member of IEEE Power & Energy Society</li>
+                        <li>Reviewed 50+ journal articles for IEEE Transactions</li>
+                        <li>Supervised 15+ undergraduate thesis projects</li>
+                    </ul>
+                </div>
+                
+                <div class="profile-section">
+                    <h3><i class="fas fa-chalkboard-teacher"></i> Courses Taught</h3>
+                    <div class="research-tags">
+                        <span>Power System Analysis</span>
+                        <span>Electrical Machines</span>
+                        <span>Power Electronics</span>
+                        <span>Renewable Energy</span>
+                        <span>Control Systems</span>
+                        <span>Electrical Circuits</span>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h3><i class="fas fa-envelope"></i> Contact Information</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div class="info-content">
+                                <h5>Email</h5>
+                                <p>masum@uap-bd.edu</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div class="info-content">
+                                <h5>Phone</h5>
+                                <p>+880 1XXX-XXXXXX</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="info-content">
+                                <h5>Office</h5>
+                                <p>Room 405, EEE Building, UAP</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CTA ==================== -->
+    <section class="reveal">
+        <div class="container">
+            <div class="cta-banner">
+                <h2>Want to be a <span>Member?</span></h2>
+                <p>Join our growing community of programmers, innovators, and AI enthusiasts.</p>
+                <a href="https://forms.gle/YOUR_MEMBER_FORM_ID" target="_blank" class="btn">
+                    <i class="fas fa-paper-plane"></i> Register Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="footer-links">
+            <a href="#mission">Mission</a>
+            <a href="#committee">Committee</a>
+            <a href="#upcoming">Events</a>
+            <a href="#past">Activities</a>
+            <a href="#contact">Contact</a>
+            <a href="#notice">Notice</a>
+        </div>
+        <p>&copy; 2026 Programming & AI Club of EEE, UAP. Built with <span>&hearts;</span></p>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+    /* ╔══════════════════════════════════════════════════════════════╗
+       ║   📸 MEMBER PHOTOS — এখানেই সব ছবি বসান                    ║
+       ╚══════════════════════════════════════════════════════════════╝ */
+
+    const PHOTOS = {
+        convenor: "https://uploads.onecompiler.io/452pzzdff/1790285931514/IMG_3284.HEIC",
+        generalSecretary: "",
+        president: "",
+        vicePresident: "",
+        jointSecretary: "",
+        technicalLead: "",
+        treasurer: "",
+        techLead: "",
+        tech1: "",
+        tech2: "",
+        tech3: "",
+        eventLead: "",
+        event1: "",
+        event2: "",
+        event3: "",
+        graphicsLead: "",
+        graphics1: "",
+        graphics2: "",
+        graphics3: "",
+        mediaLead: "",
+        media1: "",
+        media2: "",
+        media3: ""
+    };
+
+    /* ╔══════════════════════════════════════════════════════════════╗
+       ║   📢 NOTICE BOARD DATA — এখানেই Notice তথ্য বসান           ║
+       ╚══════════════════════════════════════════════════════════════╝ */
+    
+    const notices = [
+        {
+            image: "https://uploads.onecompiler.io/452pzzdff/1790367084467/Copy%20of%201.png",
+            title: "AI Workshop Notice",
+            description: "Registration details and schedule for the upcoming AI Workshop. All interested students are requested to register before the deadline.",
+            date: "25 Sept 2026"
+        },
+        {
+            image: "https://uploads.onecompiler.io/452pzzdff/1790348402014/WhatsApp%20Image%202026-09-25%20at%2020.59.34.jpeg",
+            title: "Club Registration Form",
+            description: "Official membership registration form for new members. Fill out the form and submit to the club office.",
+            date: "20 Sept 2026"
+        },
+        {
+            image: "NOTICE_IMAGE_LINK_3.jpg",
+            title: "Event Schedule 2026",
+            description: "Complete event calendar for the year 2026. Check the schedule for upcoming workshops, seminars, and competitions.",
+            date: "15 Sept 2026"
+        }
+    ];
+
+    /* ═══════════════════════════════════════════════════════════════
+       📌 PAST EVENTS DATA
+       ═══════════════════════════════════════════════════════════════ */
+    
+    const pastEvents = [
+        {
+            title: "AI Native Builder Series",
+            date: "24 Sept 2026",
+            category: "Workshop",
+            icon: "fa-brain",
+            banner: "https://uploads.onecompiler.io/452pzzdff/1790348402014/WhatsApp%20Image%202026-09-25%20at%2020.59.34.jpeg",
+            description: "A comprehensive workshop series on AI-native development, covering modern AI tools, prompt engineering, and building AI-powered applications.",
+            objectives: [
+                "Understanding AI-native development",
+                "Modern AI tools & frameworks",
+                "Prompt engineering techniques",
+                "Building AI-powered apps",
+                "Real-world project building"
+            ],
+            info: [
+                "👥 Participants: Open to all",
+                "📍 Location: UAP Campus",
+                "🏆 Outcome: Certificate",
+                "⏱️ Duration: Multiple sessions"
+            ],
+            photos: ["", "", "", "", "", ""]
+        },
+        {
+            title: "LFR Workshop",
+            date: "2025",
+            category: "Workshop",
+            icon: "fa-robot",
+            banner: "",
+            description: "An intensive hands-on workshop where students built and programmed autonomous Line Following Robots (LFR) from scratch using Arduino and IR sensors.",
+            objectives: [
+                "Understanding robot mechanics",
+                "Arduino programming basics",
+                "IR sensor calibration",
+                "Motor driver interfacing",
+                "Competition preparation"
+            ],
+            info: [
+                "👥 Participants: 35+ students",
+                "📍 Location: EEE Lab, UAP",
+                "🏆 Outcome: 15 working robots built",
+                "⏱️ Duration: 3 days"
+            ],
+            photos: ["", "", "", "", "", ""]
+        },
+        {
+            title: "Embedded Programming Workshop",
+            date: "2025",
+            category: "Workshop",
+            icon: "fa-microchip",
+            banner: "",
+            description: "A hands-on workshop on embedded programming covering microcontrollers, sensors, and real-world applications using ESP32 and Arduino.",
+            objectives: [
+                "Microcontroller fundamentals",
+                "ESP32 & Arduino programming",
+                "Sensor interfacing",
+                "IoT project building",
+                "Real-world applications"
+            ],
+            info: [
+                "👥 Participants: 45+ students",
+                "📍 Location: EEE Lab, UAP",
+                "🏆 Outcome: Certificate provided",
+                "⏱️ Duration: 2 days"
+            ],
+            photos: ["", "", "", "", "", ""]
+        },
+        {
+            title: "Welcoming the Fresh Faces of Batch 43",
+            date: "2025",
+            category: "Meetup",
+            icon: "fa-users",
+            banner: "",
+            description: "A warm welcome event for the newly admitted Batch 43 students of the Department of EEE. The event introduced them to the club and its activities.",
+            objectives: [
+                "Introduction to the club",
+                "Meet with seniors & faculty",
+                "Overview of club activities",
+                "Networking opportunity",
+                "Q&A session"
+            ],
+            info: [
+                "👥 Participants: 100+ students",
+                "📍 Location: UAP Auditorium",
+                "🏆 Outcome: Successful orientation",
+                "⏱️ Duration: 3 hours"
+            ],
+            photos: ["", "", "", "", "", ""]
+        },
+        {
+            title: "Introduction to C Programming",
+            date: "2025",
+            category: "Session",
+            icon: "fa-code",
+            banner: "",
+            description: "An introductory session on C programming fundamentals designed for junior students. The session covered the basics of C and hands-on coding practice.",
+            objectives: [
+                "C language basics",
+                "Variables and data types",
+                "Loops and conditions",
+                "Functions and arrays",
+                "Hands-on coding practice"
+            ],
+            info: [
+                "👥 Participants: 60+ students",
+                "📍 Location: UAP Campus",
+                "🏆 Outcome: High engagement",
+                "⏱️ Duration: 2 hours"
+            ],
+            photos: ["", "", "", "", "", ""]
+        },
+        {
+            title: "Computing with MATLAB",
+            date: "2025",
+            category: "Session",
+            icon: "fa-laptop-code",
+            banner: "",
+            description: "A technical session on MATLAB for engineering applications. Participants learned numerical computing, data visualization, and solving real-world problems.",
+            objectives: [
+                "MATLAB fundamentals",
+                "Numerical computing",
+                "Data visualization",
+                "Signal processing basics",
+                "Engineering applications"
+            ],
+            info: [
+                "👥 Participants: 40+ students",
+                "📍 Location: Computer Lab, UAP",
+                "🏆 Outcome: Practical skills gained",
+                "⏱️ Duration: 2 hours"
+            ],
+            photos: ["", "", "", "", "", ""]
+        }
+    ];
+
+    /* ═══════════════════════════════════════════════════════════════
+       🔧 RENDER ENGINE
+       ═══════════════════════════════════════════════════════════════ */
+    
+    function applyPhotos() {
+        Object.keys(PHOTOS).forEach(key => {
+            const link = PHOTOS[key];
+            if (!link) return;
+            const elements = document.querySelectorAll(`[data-photo="${key}"]`);
+            elements.forEach(el => {
+                el.innerHTML = `<img src="${link}" alt="${key}" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;fas fa-user-tie&quot;></i>';">`;
+            });
+        });
+    }
+    
+    /* ============ NOTICE MODAL ============ */
+    function openNoticeModal(index) {
+        const notice = notices[index];
+        const modal = document.getElementById('noticeModal');
+        
+        document.getElementById('noticeModalImg').src = notice.image;
+        document.getElementById('noticeModalTitle').textContent = notice.title;
+        document.getElementById('noticeModalDesc').textContent = notice.description;
+        document.getElementById('noticeModalDate').textContent = notice.date;
+        
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeNoticeModal() {
+        document.getElementById('noticeModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeNoticeModal();
+    });
+
+    document.getElementById('noticeModal').addEventListener('click', (e) => {
+        if (e.target.id === 'noticeModal') closeNoticeModal();
+    });
+    
+    /* ============ RENDER PAST EVENT CARDS ============ */
+    const pastGrid = document.getElementById('pastEventsGrid');
+    pastEvents.forEach((event, index) => {
+        const card = document.createElement('div');
+        card.className = 'past-event-card';
+        card.onclick = () => openModal(index);
+        const imgContent = event.banner
+            ? `<img src="${event.banner}" alt="${event.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;fas ${event.icon}&quot;></i>';" style="width:100%; height:100%; object-fit:cover;">`
+            : `<i class="fas ${event.icon}"></i>`;
+        card.innerHTML = `
+            <div class="past-event-img">${imgContent}</div>
+            <div class="past-event-info">
+                <span class="date">${event.date}</span>
+                <h3>${event.title}</h3>
+                <span class="view-btn">View Details <i class="fas fa-arrow-right"></i></span>
+            </div>
+        `;
+        pastGrid.appendChild(card);
+    });
+
+    /* ============ MODAL LOGIC ============ */
+    const modal = document.getElementById('eventModal');
+    const modalCover = document.getElementById('modalCover');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMeta = document.getElementById('modalMeta');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalObjectives = document.getElementById('modalObjectives');
+    const modalInfo = document.getElementById('modalInfo');
+    const modalGallery = document.getElementById('modalGallery');
+    const modalClose = document.getElementById('modalClose');
+
+    function openModal(index) {
+        const event = pastEvents[index];
+        
+        if (event.banner) {
+            modalCover.innerHTML = `<img src="${event.banner}" alt="${event.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;fas ${event.icon}&quot;></i>';" style="width:100%; height:100%; object-fit:cover;">`;
+        } else {
+            modalCover.innerHTML = `<i class="fas ${event.icon}"></i>`;
+        }
+        
+        modalTitle.textContent = event.title;
+        modalMeta.innerHTML = `
+            <span><i class="fas fa-calendar"></i> ${event.date}</span>
+            <span><i class="fas fa-tag"></i> ${event.category}</span>
+        `;
+        modalDescription.textContent = event.description;
+        modalObjectives.innerHTML = event.objectives.map(o => `<li>${o}</li>`).join('');
+        modalInfo.innerHTML = event.info.map(i => `<li>${i}</li>`).join('');
+        
+        const hasPhotos = event.photos && event.photos.some(p => p !== "");
+        
+        if (hasPhotos) {
+            modalGallery.innerHTML = event.photos.map(photo => 
+                photo 
+                    ? `<div class="modal-gallery-item"><img src="${photo}" alt="Photo" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;fas fa-image&quot;></i>';"></div>`
+                    : `<div class="modal-gallery-item"><i class="fas fa-image"></i></div>`
+            ).join('');
+            document.getElementById('gallerySection').style.display = 'block';
+        } else if (event.banner) {
+            modalGallery.innerHTML = `
+                <div class="modal-gallery-item" style="grid-column: span 2;"><img src="${event.banner}" alt="Photo"></div>
+                <div class="modal-gallery-item"><img src="${event.banner}" alt="Photo"></div>
+                <div class="modal-gallery-item"><img src="${event.banner}" alt="Photo"></div>
+            `;
+            document.getElementById('gallerySection').style.display = 'block';
+        } else {
+            modalGallery.innerHTML = Array(6).fill().map(() => 
+                `<div class="modal-gallery-item"><i class="fas fa-image"></i></div>`
+            ).join('');
+            document.getElementById('gallerySection').style.display = 'block';
+        }
+        
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    /* ═══════════════════════════════════════════════════════════════
+       👑 CONVENOR PROFILE MODAL
+       ═══════════════════════════════════════════════════════════════ */
+    function openConvenorModal() {
+        const modal = document.getElementById('convenorModal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        if (PHOTOS.convenor) {
+            document.getElementById('convenorModalPhoto').innerHTML = 
+                `<img src="${PHOTOS.convenor}" alt="Convenor" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;fas fa-user-tie&quot;></i>';">`;
+        }
+    }
+
+    function closeConvenorModal() {
+        const modal = document.getElementById('convenorModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeConvenorModal();
+    });
+
+    document.getElementById('convenorModal').addEventListener('click', (e) => {
+        if (e.target.id === 'convenorModal') closeConvenorModal();
+    });
+
+    /* ═══════════════════════════════════════════════════════════════
+       🔧 NAVBAR & MENU
+       ═══════════════════════════════════════════════════════════════ */
+    window.addEventListener('scroll', function() {
+        const nav = document.getElementById('navbar');
+        if (window.scrollY > 50) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+    });
+
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealOnScroll = () => {
+        revealElements.forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                el.classList.add('active');
+            }
+        });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    
+    window.addEventListener('load', function() {
+        applyPhotos();
+        revealOnScroll();
+    });
+    </script>
+
+</body>
+</html>
