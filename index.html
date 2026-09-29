@@ -1520,126 +1520,145 @@
             font-size: 0.78rem;
             text-transform: uppercase;
         }
-        
-        /* ==================== WORK EXPERIENCE ==================== */
-        .work-timeline {
-            position: relative;
-            padding-left: 30px;
+
+        /* ==================== WORK EXPERIENCE (LinkedIn Style) ==================== */
+        .work-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
         }
-        .work-timeline::before {
-            content: '';
-            position: absolute;
-            left: 8px;
-            top: 5px;
-            bottom: 5px;
-            width: 2px;
-            background: linear-gradient(180deg, var(--primary), var(--accent));
-        }
-        .work-item {
-            position: relative;
-            padding: 16px 0;
+        .work-entry {
+            display: flex;
+            gap: 16px;
+            padding: 22px 0;
             border-bottom: 1px solid rgba(0, 212, 255, 0.08);
         }
-        .work-item:last-child {
+        .work-entry:last-child {
             border-bottom: none;
         }
-        .work-item::before {
-            content: '';
-            position: absolute;
-            left: -30px;
-            top: 24px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--primary);
-            box-shadow: 0 0 15px var(--primary);
-            border: 2px solid var(--bg-dark);
-        }
-        .work-item .work-header {
+        .work-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 8px;
-            margin-bottom: 6px;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(124, 58, 237, 0.15));
+            border: 1px solid var(--border);
+            color: var(--primary);
+            font-size: 1.6rem;
         }
-        .work-item h4 {
+        .work-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #fff;
+            padding: 6px;
+        }
+        .work-content {
+            flex: 1;
+            min-width: 0;
+        }
+        .work-content > h4 {
             color: #fff;
-            font-size: 1rem;
-            margin: 0;
+            font-size: 1.05rem;
+            margin: 0 0 4px;
+            font-weight: 600;
             line-height: 1.4;
         }
-        .work-item .work-date {
-            color: var(--primary);
-            font-size: 0.8rem;
-            font-weight: 500;
-            white-space: nowrap;
-            padding: 3px 12px;
-            background: rgba(0, 212, 255, 0.08);
-            border: 1px solid var(--border);
-            border-radius: 50px;
+        .work-content > .work-org-line {
+            color: var(--text);
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
         }
-        .work-item .work-org {
-            color: var(--accent-light);
-            font-size: 0.88rem;
-            font-weight: 500;
-            margin-bottom: 8px;
+        .work-content > .work-org-line i {
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+        .work-content > .work-meta {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 4px;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 6px;
         }
-        .work-item .work-org i {
-            color: var(--primary);
-            font-size: 0.8rem;
-        }
-        .work-item .work-desc {
+        .work-content > .work-meta .dot-sep {
             color: var(--text-muted);
-            font-size: 0.88rem;
-            line-height: 1.6;
-            margin: 0;
+            opacity: 0.6;
         }
-        .work-item .work-desc ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .work-item .work-desc ul li {
-            padding: 4px 0 4px 22px;
-            position: relative;
+        .work-content > .work-location {
             color: var(--text-muted);
-            font-size: 0.88rem;
-        }
-        .work-item .work-desc ul li::before {
-            content: '\f0da';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-size: 0.75rem;
-        }
-        .work-status-badge {
-            display: inline-flex;
+            font-size: 0.85rem;
+            display: flex;
             align-items: center;
             gap: 6px;
-            padding: 4px 12px;
-            background: linear-gradient(135deg, rgba(52, 168, 83, 0.15), rgba(66, 133, 244, 0.1));
-            border: 1px solid rgba(52, 168, 83, 0.4);
-            border-radius: 50px;
-            font-size: 0.72rem;
-            color: #4ade80;
-            font-weight: 600;
-            margin-left: 8px;
+            margin-bottom: 4px;
         }
-        .work-status-badge::before {
+        .work-content > .work-desc-text {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-top: 6px;
+            line-height: 1.6;
+        }
+        /* nested positions (same company) */
+        .work-positions {
+            position: relative;
+            margin-top: 12px;
+            padding-left: 20px;
+        }
+        .work-positions::before {
             content: '';
-            width: 6px;
-            height: 6px;
-            background: #4ade80;
+            position: absolute;
+            left: 4px;
+            top: 14px;
+            bottom: 14px;
+            width: 2px;
+            background: rgba(0, 212, 255, 0.25);
+        }
+        .work-position {
+            position: relative;
+            padding: 12px 0;
+        }
+        .work-position::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 20px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            box-shadow: 0 0 8px #4ade80;
-            animation: pulseHint 2s ease-in-out infinite;
+            background: var(--primary);
+            box-shadow: 0 0 12px var(--primary);
+            border: 2px solid var(--bg-dark);
+        }
+        .work-position h5 {
+            color: #fff;
+            font-size: 0.98rem;
+            font-weight: 600;
+            margin: 0 0 4px;
+        }
+        .work-position .pos-meta {
+            color: var(--text-muted);
+            font-size: 0.83rem;
+            margin-bottom: 3px;
+        }
+        .work-position .pos-loc {
+            color: var(--text-muted);
+            font-size: 0.83rem;
+        }
+        .work-position .pos-desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 6px;
+            line-height: 1.6;
         }
         
         @media (max-width: 900px) {
@@ -1683,6 +1702,7 @@
             .notice-board { grid-template-columns: 1fr; gap: 20px; }
             .notice-modal-body { padding: 25px 22px; }
             .notice-modal-body h2 { font-size: 1.3rem; }
+            .work-logo { width: 48px; height: 48px; font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -2349,97 +2369,87 @@
                     </div>
                 </div>
                 
-                <!-- ==================== WORK EXPERIENCE (NEW) ==================== -->
+                <!-- ==================== WORK EXPERIENCE (LinkedIn Style) ==================== -->
                 <div class="profile-section">
                     <h3><i class="fas fa-briefcase"></i> Working Experience</h3>
-                    <div class="work-timeline">
+                    <div class="work-list">
 
-                        <!-- Current Position -->
-                        <div class="work-item">
-                            <div class="work-header">
-                                <h4>Assistant Professor <span class="work-status-badge">Current</span></h4>
-                                <span class="work-date">26 Jan 2010 – Present</span>
+                        <!-- Joint CEO -->
+                        <div class="work-entry">
+                            <div class="work-logo">
+                                <i class="fas fa-briefcase"></i>
                             </div>
-                            <div class="work-org">
-                                <i class="fas fa-university"></i> University of Asia Pacific (UAP)
-                            </div>
-                            <div class="work-desc">
-                                <ul>
-                                    <li>Conducting "Solid State Device" course</li>
-                                    <li>Conducting "Power System Stability" course</li>
-                                    <li>Conducting "Measurement and Instrumentation" course</li>
-                                </ul>
+                            <div class="work-content">
+                                <h4>Joint CEO</h4>
+                                <div class="work-org-line">
+                                    <i class="fas fa-building"></i> Book Buy BD
+                                    <span class="dot-sep">·</span> Full-time
+                                </div>
+                                <div class="work-meta">
+                                    <span>Aug 2017 – Present</span>
+                                    <span class="dot-sep">·</span>
+                                    <span>9 yrs 2 mos</span>
+                                </div>
+                                <div class="work-location">
+                                    <i class="fas fa-map-marker-alt"></i> Nikhet, Bangladesh · On-site
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Former Experience 1 -->
-                        <div class="work-item">
-                            <div class="work-header">
-                                <h4>Research Assistant</h4>
-                                <span class="work-date">May – Dec 2014</span>
+                        <!-- University of Asia Pacific - UAP -->
+                        <div class="work-entry">
+                            <div class="work-logo">
+                                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8e/University_of_Asia_Pacific_logo.svg/200px-University_of_Asia_Pacific_logo.svg.png"
+                                     alt="UAP"
+                                     onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;fas fa-university&quot;></i>';">
                             </div>
-                            <div class="work-org">
-                                <i class="fas fa-flask"></i> Karlsruhe Institute of Technology (KIT), Germany
-                            </div>
-                            <div class="work-desc">
-                                <ul>
-                                    <li>Supervisor: Rene Sander, Faculty, Department of IEH</li>
-                                    <li>Modeled a prototype of three-terminal HVDC connections in PSCAD to study wave propagation of potential gradient through transmission line during fault.</li>
-                                    <li>Developed an algorithm based on time-frequency signal analysis (Wavelet Transform) for fault detection.</li>
-                                </ul>
+                            <div class="work-content">
+                                <h4>University of Asia Pacific - UAP</h4>
+                                <div class="work-meta">
+                                    <span>16 yrs 9 mos</span>
+                                </div>
+
+                                <div class="work-positions">
+                                    <!-- Assistant Professor -->
+                                    <div class="work-position">
+                                        <h5>Assistant Professor</h5>
+                                        <div class="pos-meta">Jan 2010 – Present · 16 yrs 9 mos</div>
+                                        <div class="pos-loc">Dhaka, Bangladesh · On-site</div>
+                                    </div>
+                                    <!-- Lecturer -->
+                                    <div class="work-position">
+                                        <h5>Lecturer</h5>
+                                        <div class="pos-meta">Jan 2010 – Aug 2012 · 2 yrs 8 mos</div>
+                                        <div class="pos-loc">Dhanmondi, Dhaka</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Former Experience 2 -->
-                        <div class="work-item">
-                            <div class="work-header">
-                                <h4>Research Assistant</h4>
-                                <span class="work-date">2008 – 2009</span>
+                        <!-- Visiting Faculty - East West University -->
+                        <div class="work-entry">
+                            <div class="work-logo">
+                                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/East_West_University_logo.svg/200px-East_West_University_logo.svg.png"
+                                     alt="EWU"
+                                     onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;fas fa-university&quot;></i>';">
                             </div>
-                            <div class="work-org">
-                                <i class="fas fa-microscope"></i> University of Dhaka
-                            </div>
-                            <div class="work-desc">
-                                <ul>
-                                    <li>Supervisor: Professor Siddique-e-Rabbani, Dept. of Biomedical Engineering</li>
-                                    <li>Designed and developed a low-cost bone densitometer based on existing X-ray facility.</li>
-                                    <li>Incorporated aluminium stack method to eliminate processing variations in bone density measurement.</li>
-                                    <li>Developed a low-cost device to measure optical density of X-ray film over a circular area (~1cm).</li>
-                                    <li>Research accepted at Exhibition of Recent Advances in Physics (BMPA & BMPT, DU).</li>
-                                    <li>Research published in the Journal of Medical Physics.</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Former Experience 3 -->
-                        <div class="work-item">
-                            <div class="work-header">
+                            <div class="work-content">
                                 <h4>Visiting Faculty</h4>
-                                <span class="work-date">2015</span>
-                            </div>
-                            <div class="work-org">
-                                <i class="fas fa-chalkboard-teacher"></i> East West University (EWU) — Dept. of EEE
-                            </div>
-                            <div class="work-desc">
-                                <ul>
-                                    <li>Conducted "Power Station Engineering" course</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Former Experience 4 -->
-                        <div class="work-item">
-                            <div class="work-header">
-                                <h4>Part-Time Faculty</h4>
-                                <span class="work-date">2012</span>
-                            </div>
-                            <div class="work-org">
-                                <i class="fas fa-chalkboard"></i> World University of Bangladesh (WUB) — Dept. of MTE
-                            </div>
-                            <div class="work-desc">
-                                <ul>
-                                    <li>Conducted a range of courses in the field of engineering</li>
-                                </ul>
+                                <div class="work-org-line">
+                                    <i class="fas fa-university"></i> East West University
+                                    <span class="dot-sep">·</span> Part-time
+                                </div>
+                                <div class="work-meta">
+                                    <span>Jun 2016 – Oct 2016</span>
+                                    <span class="dot-sep">·</span>
+                                    <span>5 mos</span>
+                                </div>
+                                <div class="work-location">
+                                    <i class="fas fa-map-marker-alt"></i> Rampura
+                                </div>
+                                <div class="work-desc-text">
+                                    Guest Faculty at the department of EEE
+                                </div>
                             </div>
                         </div>
 
