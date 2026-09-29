@@ -1521,6 +1521,127 @@
             text-transform: uppercase;
         }
         
+        /* ==================== WORK EXPERIENCE ==================== */
+        .work-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        .work-timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 5px;
+            bottom: 5px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+        }
+        .work-item {
+            position: relative;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.08);
+        }
+        .work-item:last-child {
+            border-bottom: none;
+        }
+        .work-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 24px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+            border: 2px solid var(--bg-dark);
+        }
+        .work-item .work-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .work-item h4 {
+            color: #fff;
+            font-size: 1rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+        .work-item .work-date {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            padding: 3px 12px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+        }
+        .work-item .work-org {
+            color: var(--accent-light);
+            font-size: 0.88rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+        }
+        .work-item .work-org i {
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+        .work-item .work-desc {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .work-item .work-desc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .work-item .work-desc ul li {
+            padding: 4px 0 4px 22px;
+            position: relative;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+        .work-item .work-desc ul li::before {
+            content: '\f0da';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 0.75rem;
+        }
+        .work-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, rgba(52, 168, 83, 0.15), rgba(66, 133, 244, 0.1));
+            border: 1px solid rgba(52, 168, 83, 0.4);
+            border-radius: 50px;
+            font-size: 0.72rem;
+            color: #4ade80;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .work-status-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #4ade80;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #4ade80;
+            animation: pulseHint 2s ease-in-out infinite;
+        }
+        
         @media (max-width: 900px) {
             .menu-toggle { display: block; }
             .nav-links {
@@ -2036,14 +2157,13 @@
         </div>
     </section>
 
-    <!-- ==================== NOTICE BOARD (LAST SECTION) ==================== -->
+    <!-- ==================== NOTICE BOARD ==================== -->
     <section id="notice" class="reveal">
         <div class="container">
             <h2 class="section-title">📢 Notice <span>Board</span></h2>
             
             <div class="notice-board">
                 
-                <!-- NOTICE 1 -->
                 <div class="notice-card" onclick="openNoticeModal(0)">
                     <div class="notice-badge-new">🔴 NEW</div>
                     <div class="notice-img">
@@ -2059,7 +2179,6 @@
                     </div>
                 </div>
                 
-                <!-- NOTICE 2 -->
                 <div class="notice-card" onclick="openNoticeModal(1)">
                     <div class="notice-img">
                         <img src="https://uploads.onecompiler.io/452pzzdff/1790348402014/WhatsApp%20Image%202026-09-25%20at%2020.59.34.jpeg" alt="Notice"
@@ -2074,7 +2193,6 @@
                     </div>
                 </div>
                 
-                <!-- NOTICE 3 -->
                 <div class="notice-card" onclick="openNoticeModal(2)">
                     <div class="notice-img">
                         <img src="NOTICE_IMAGE_LINK_3.jpg" alt="Notice"
@@ -2231,6 +2349,104 @@
                     </div>
                 </div>
                 
+                <!-- ==================== WORK EXPERIENCE (NEW) ==================== -->
+                <div class="profile-section">
+                    <h3><i class="fas fa-briefcase"></i> Working Experience</h3>
+                    <div class="work-timeline">
+
+                        <!-- Current Position -->
+                        <div class="work-item">
+                            <div class="work-header">
+                                <h4>Assistant Professor <span class="work-status-badge">Current</span></h4>
+                                <span class="work-date">26 Jan 2010 – Present</span>
+                            </div>
+                            <div class="work-org">
+                                <i class="fas fa-university"></i> University of Asia Pacific (UAP)
+                            </div>
+                            <div class="work-desc">
+                                <ul>
+                                    <li>Conducting "Solid State Device" course</li>
+                                    <li>Conducting "Power System Stability" course</li>
+                                    <li>Conducting "Measurement and Instrumentation" course</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Former Experience 1 -->
+                        <div class="work-item">
+                            <div class="work-header">
+                                <h4>Research Assistant</h4>
+                                <span class="work-date">May – Dec 2014</span>
+                            </div>
+                            <div class="work-org">
+                                <i class="fas fa-flask"></i> Karlsruhe Institute of Technology (KIT), Germany
+                            </div>
+                            <div class="work-desc">
+                                <ul>
+                                    <li>Supervisor: Rene Sander, Faculty, Department of IEH</li>
+                                    <li>Modeled a prototype of three-terminal HVDC connections in PSCAD to study wave propagation of potential gradient through transmission line during fault.</li>
+                                    <li>Developed an algorithm based on time-frequency signal analysis (Wavelet Transform) for fault detection.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Former Experience 2 -->
+                        <div class="work-item">
+                            <div class="work-header">
+                                <h4>Research Assistant</h4>
+                                <span class="work-date">2008 – 2009</span>
+                            </div>
+                            <div class="work-org">
+                                <i class="fas fa-microscope"></i> University of Dhaka
+                            </div>
+                            <div class="work-desc">
+                                <ul>
+                                    <li>Supervisor: Professor Siddique-e-Rabbani, Dept. of Biomedical Engineering</li>
+                                    <li>Designed and developed a low-cost bone densitometer based on existing X-ray facility.</li>
+                                    <li>Incorporated aluminium stack method to eliminate processing variations in bone density measurement.</li>
+                                    <li>Developed a low-cost device to measure optical density of X-ray film over a circular area (~1cm).</li>
+                                    <li>Research accepted at Exhibition of Recent Advances in Physics (BMPA & BMPT, DU).</li>
+                                    <li>Research published in the Journal of Medical Physics.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Former Experience 3 -->
+                        <div class="work-item">
+                            <div class="work-header">
+                                <h4>Visiting Faculty</h4>
+                                <span class="work-date">2015</span>
+                            </div>
+                            <div class="work-org">
+                                <i class="fas fa-chalkboard-teacher"></i> East West University (EWU) — Dept. of EEE
+                            </div>
+                            <div class="work-desc">
+                                <ul>
+                                    <li>Conducted "Power Station Engineering" course</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Former Experience 4 -->
+                        <div class="work-item">
+                            <div class="work-header">
+                                <h4>Part-Time Faculty</h4>
+                                <span class="work-date">2012</span>
+                            </div>
+                            <div class="work-org">
+                                <i class="fas fa-chalkboard"></i> World University of Bangladesh (WUB) — Dept. of MTE
+                            </div>
+                            <div class="work-desc">
+                                <ul>
+                                    <li>Conducted a range of courses in the field of engineering</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- ==================== END WORK EXPERIENCE ==================== -->
+                
                 <div class="profile-section">
                     <h3><i class="fas fa-flask"></i> Research Areas</h3>
                     <div class="research-tags">
@@ -2273,13 +2489,13 @@
                 <div class="profile-section">
                     <h3><i class="fas fa-trophy"></i> Achievements</h3>
                     <ul class="achievements-list">
-                        <li>Won as “Champion” in Intra University competition 'Research EXPO 2025' organised by Department of CSE , UAP , 2025.</li>
-                        <li>Won as “Champion” with a prize money of Worth 50,000Tk. in the national competition 'Power and Energy Hackathon 2017' organized by Ministry for Power, Energy and Mineral Resources (MPEMR). Challenge task : To find solution for giving affordable access to Electricity for the people living in far remote areas like islands ,top of hillys which are yet to get the coverage of electricity</li>
-                        <li>Won as “1st Runner UP” with a prize money of Worth 50,000Tk. in the national competition 'Power and Energy Hackathon 2017' organized by Ministry for Power, Energy and Mineral Resources (MPEMR). Challenge task: Design a Intelligent Energy efficient system with real time monitoring.</li>
+                        <li>Won as "Champion" in Intra University competition 'Research EXPO 2025' organised by Department of CSE , UAP , 2025.</li>
+                        <li>Won as "Champion" with a prize money of Worth 50,000Tk. in the national competition 'Power and Energy Hackathon 2017' organized by Ministry for Power, Energy and Mineral Resources (MPEMR). Challenge task : To find solution for giving affordable access to Electricity for the people living in far remote areas like islands ,top of hillys which are yet to get the coverage of electricity</li>
+                        <li>Won as "1st Runner UP" with a prize money of Worth 50,000Tk. in the national competition 'Power and Energy Hackathon 2017' organized by Ministry for Power, Energy and Mineral Resources (MPEMR). Challenge task: Design a Intelligent Energy efficient system with real time monitoring.</li>
                         <li>KIC Inno Energy (organ of European Union) scholarship for masters of two years in two different countries in Smart Electrical Network and Systems (SENSE) (2012)  in KIT, Germany and KTH, Sweden.</li>
                         <li>Awarded another two years of Scholarship for higher study in the field of Optics and Photonics in Karlsruhe Institute of Technology (KIT) , Germany</li> 
                         <li>OIC Full Scholarship for 4 years during undergraduate studies (2005 -2009).</li>
-                        <li>Achieved “Best Student Award” from a television program of NTV</li>
+                        <li>Achieved "Best Student Award" from a television program of NTV</li>
                         <li>Merit/Board Scholarship from Bangladesh Government for HSC result (2005 - 2009)</li>
                         <li>Merit/Board Scholarship from Bangladesh Government for SSC result (2003 - 2005)</li>
                         <li>Obtained Junior Scholarship during the study period of Primary Schooling.</li>
